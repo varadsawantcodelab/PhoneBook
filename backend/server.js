@@ -16,6 +16,27 @@ const pool = new Pool({
     database: process.env.DB_DATABASE,
 });
 
+// Automatically create table if it doesn't exist
+const initDB = async () => {
+    try {
+        await pool.query(`
+            CREATE TABLE IF NOT EXISTS users (
+                user_id SERIAL PRIMARY KEY,
+                first_name VARCHAR(50) NOT NULL,
+                last_name VARCHAR(50) NOT NULL,
+                email VARCHAR(100) UNIQUE NOT NULL,
+                phone_number VARCHAR(20),
+                is_active BOOLEAN DEFAULT TRUE,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+            );
+        `);
+        console.log("Database table initialized successfully.");
+    } catch (err) {
+        console.error("Error initializing database table:", err.message);
+    }
+};
+initDB();
+
 // DATABASE CONNECTION TEST ENDPOINT
 app.get('/api/healthcheck', async (req, res) => {
     try {
