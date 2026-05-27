@@ -1,0 +1,46 @@
+
+
+services:
+  # 1. DATABASE SERVICE
+  postgres_db:
+    image: postgres:17-alpine
+    container_name: phonebook_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secure@1234
+      POSTGRES_DB: phonebook_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # 2. BACKEND SERVICE
+  backend:
+    build: ./backend
+    container_name: phonebook_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DB_USER=postgres
+      - DB_PASSWORD=secure@1234
+      - DB_HOST=postgres_db  # Matches the database service name above
+      - DB_PORT=5432
+      - DB_DATABASE=phonebook_db
+    depends_on:
+      - postgres_db
+
+  # 3. FRONTEND SERVICE
+  frontend:
+    build: ./frontend
+    container_name: phonebook_frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  pgdata: # Ensures your database entries aren't wiped when containers stop
