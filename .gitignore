@@ -11,3 +11,6 @@ frontend/dist/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+kubectl apply -f phonebook-stack.yaml
+kubectl exec -i postgres-7f4c9b8c-xxxx -- psql -U postgres -d phonebook < init.sql
