@@ -9,7 +9,7 @@ function App() {
   // Connection status states: 'idle', 'testing', 'connected', 'failed'
   const [dbStatus, setDbStatus] = useState('idle'); 
 
-  const API_URL = 'http://63.33.164.208:5000/api';
+  const API_URL = 'http://3.255.84.18:5000/api';
 
   // Fetch Users (Read)
   const fetchUsers = async () => {
