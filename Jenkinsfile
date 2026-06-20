@@ -9,12 +9,6 @@ pipeline {
     }
     
     stages {
-        stage('Clone Source Code') {
-            steps {
-                echo 'Pulling code from GitHub...'
-                git branch: 'main', url: 'https://github.com/varadsawantcodelab/PhoneBook.git'
-            }
-        }
         
         stage('Build Frontend & Backend') {
             steps {
