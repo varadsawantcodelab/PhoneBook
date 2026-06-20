@@ -51,7 +51,7 @@ pipeline {
                     sh "sed -i 's|image: ${DOCKER_USER}/${IMAGE_NAME}:backend.*|image: ${DOCKER_USER}/${IMAGE_NAME}:backend-${IMAGE_TAG}|g' phonebook-stack.yaml"
                     
                     // Deploy the unified stack file to KinD
-                    sh "kubectl apply -f phonebook-stack.yaml"
+                    sh "kubectl apply -f phonebook-stack.yaml --validate=false"
                 }
             }
         }
