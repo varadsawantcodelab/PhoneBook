@@ -53,8 +53,8 @@ pipeline {
                 echo 'Updating image tags in phonebook-stack.yaml and deploying...'
                 script {
                     // Update the frontend and backend image tags directly inside the root manifest file
-                    sh "sed -i 's|image: ${DOCKER_USER}/${IMAGE_NAME}:frontend-.*|image: ${DOCKER_USER}/${IMAGE_NAME}:frontend-${IMAGE_TAG}|g' phonebook-stack.yaml"
-                    sh "sed -i 's|image: ${DOCKER_USER}/${IMAGE_NAME}:backend-.*|image: ${DOCKER_USER}/${IMAGE_NAME}:backend-${IMAGE_TAG}|g' phonebook-stack.yaml"
+                    sh "sed -i 's|image: ${DOCKER_USER}/${IMAGE_NAME}:frontend.*|image: ${DOCKER_USER}/${IMAGE_NAME}:frontend-${IMAGE_TAG}|g' phonebook-stack.yaml"
+                    sh "sed -i 's|image: ${DOCKER_USER}/${IMAGE_NAME}:backend.*|image: ${DOCKER_USER}/${IMAGE_NAME}:backend-${IMAGE_TAG}|g' phonebook-stack.yaml"
                     
                     // Deploy the unified stack file to KinD
                     sh "kubectl apply -f phonebook-stack.yaml"
